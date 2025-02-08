@@ -13,7 +13,7 @@ import AchievementsCertifications from './components/AchievementsCertifications'
 
 
 function App() {
-  const theme = useTheme(); // Access the MUI theme for breakpoints
+  const theme = useTheme(); // Access the MUI theme for breakpoints..
 
   
 
