@@ -14,10 +14,11 @@ import {
   Code as CodeIcon,
   Cloud as CloudIcon,
 } from "@mui/icons-material";
+import { usePage } from './PageContext';
 
 function AchievementsCertifications() {
   const theme = useTheme();
-
+  const { handlePageTurn } = usePage();
   return (
     <>
     <Box
@@ -230,9 +231,12 @@ function AchievementsCertifications() {
       </Box>
     </Box>
     <span className="number-page">4</span>
-      <span className="nextprev-btn back" data-page="turn-2">
-        <box-icon name="chevron-left"></box-icon>
-      </span>
+          <span className="nextprev-btn back" data-page="turn-2" 
+          onClick={() => handlePageTurn('prev')}
+          >
+
+            <box-icon name="chevron-left"></box-icon>
+          </span>
     </>
 
   );

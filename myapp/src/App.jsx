@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import 'boxicons';
 import './index.css'; 
 import {  Box, Typography, useTheme } from '@mui/material';
-import Grid from '@mui/material/Grid2';
+
+import { PageProvider } from './components/PageContext';
 
 
 import ProfilePage from './components/ProfilePage'; // Import ProfilePage component
@@ -14,11 +15,41 @@ import AchievementsCertifications from './components/AchievementsCertifications'
 
 function App() {
   const theme = useTheme(); // Access the MUI theme for breakpoints..
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = 2; // Total number of pages (0-indexed)
+  const [pagesTurned, setPagesTurned] = useState(0);
+  // Page turning logic
+  // const handlePageTurn = (direction) => {
+  //   console.log('direction', direction);
+  //   if (direction === 'next' && currentPage < totalPages ) {
+  //     setCurrentPage(prev => prev + 1);
+  //   } else if (direction === 'prev' && currentPage > 0) {
+  //     setCurrentPage(prev => prev - 1);
+  //   }
+  //   console.log(currentPage)
+  // };
+  const handlePageTurn = (direction) => {
+    setPagesTurned(prev => {
+      const newValue = direction === 'next' ? prev + 1 : prev - 1;
+      return Math.max(0, Math.min(newValue, totalPages));
+    });
+  };
 
+  // Add keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight') handlePageTurn('next');
+      if (e.key === 'ArrowLeft') handlePageTurn('prev');
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentPage]);
   
 
   return (
     <>
+     <PageProvider value={{ currentPage, totalPages, handlePageTurn }}>
      <Box className="wrapper" 
       // style={{backgroundColor:'#00abf0'}}
       sx={{
@@ -43,24 +74,36 @@ function App() {
       ></Box>
 
       <Box className="book">
-        <div className = "book-page page-left ">
+      <div className={`book-page page-left ${currentPage === 0 ? 'active' : ''}`}>
           <ProfilePage />
         </div>
-        <div className = "book-page page-right turn " >
+        {/* <div className={`book-page page-right ${currentPage >= 1 ? 'turn' : ''}`}> */}
+        <div 
+  className={`book-page page-right ${pagesTurned > 1 ? 'turn' : ''}`}
+  style={{ zIndex: 20 - 1 }}
+>
           <div className='page-front'>
           <ExperienceEducation />
+          
           </div>
           <div className='page-back'>
-          <SkillsPage />
+          <SkillsPage  />
+         
           </div>
          
         </div>
-        <div className = "book-page page-right turn ">
+        {/* <div className={`book-page page-right ${currentPage >= 2 ? 'turn' : ''}`}> */}
+        <div 
+  className={`book-page page-right ${pagesTurned > 2 ? 'turn' : ''}`}
+  // style={{ zIndex: 20 - 3}}
+>
           <div className='page-front'>
           <ProjectsPage />
+         
           </div>
           <div className='page-back'>
           <AchievementsCertifications />
+              
           </div>
         </div>
       
@@ -69,6 +112,7 @@ function App() {
 
         </Box> 
         </Box>
+        </PageProvider>
     </>
   );
 }

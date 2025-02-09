@@ -1,8 +1,10 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { CalendarToday } from "@mui/icons-material";
+import { usePage } from './PageContext';
 
 function ExperienceEducation() {
+  const { handlePageTurn } = usePage();
   return (
     <>
       <Box
@@ -214,12 +216,19 @@ function ExperienceEducation() {
             </Box>
           ))}
         </Box>
-        <Box sx={{ display: "flex",justifyContent:'flex-end', alignItems: "center", cursor: "pointer",transition: ".5s",  width:'100%'}}>
+        {/* <Box sx={{ display: "flex",justifyContent:'flex-end', alignItems: "center", cursor: "pointer",transition: ".5s",  width:'100%'}}>
           {/* <Typography sx={{ fontSize: "0.875rem", color: "#007acc", mr: 1 }}>
             1
           </Typography> */}
-          <box-icon name="chevron-right" sx={{cursor:'pointer'}}></box-icon>
-        </Box>
+          {/* <box-icon name="chevron-right" sx={{cursor:'pointer'}}></box-icon>
+        </Box> */} 
+        <span className='number-page'>1</span>
+              <span className="nextprev-btn " data-page="turn-1" 
+              onClick={() => handlePageTurn('next')}
+              >
+               
+                <box-icon name='chevron-right'></box-icon>
+        </span>
       </Box>
     
     </>

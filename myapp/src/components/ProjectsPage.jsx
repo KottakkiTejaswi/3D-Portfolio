@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Grid, Card, CardContent, Typography, Box } from "@mui/material";
+import { usePage } from './PageContext';
 
 const projects = [
   {
@@ -29,6 +30,7 @@ const projects = [
 ];
 
 const ProjectsPage = () => {
+  const { handlePageTurn } = usePage();
   return (
     <>
      <Box
@@ -103,7 +105,10 @@ const ProjectsPage = () => {
     </Box>
     </Box>
     <span className='number-page'>3</span>
-              <span className="nextprev-btn " data-page="turn-1">
+              <span className="nextprev-btn " data-page="turn-1" 
+              onClick={() => handlePageTurn('next')}
+
+              >
                 <box-icon name='chevron-right'></box-icon>
         </span>
         

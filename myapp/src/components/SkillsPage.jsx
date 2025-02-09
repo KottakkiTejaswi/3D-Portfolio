@@ -4,8 +4,10 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import StorageIcon from '@mui/icons-material/Storage';
+import { usePage } from './PageContext';
 function SkillsPage() {
-
+  const { handlePageTurn } = usePage();
+  
     const DemoPaper = styled(Paper)(({ theme }) => ({
         width: 100,
         height: 100,
@@ -185,16 +187,21 @@ function SkillsPage() {
                         
                             </Box>
                         
-
+      <span className='number-page'>2</span>
+      <span 
+        className="nextprev-btn back" 
+        data-page="turn-1"
+        onClick={() => handlePageTurn('prev')}
+        sx={{ cursor: 'pointer' }} // Add MUI sx prop for styling
+      >
+        <box-icon name='chevron-left'></box-icon>
+      </span>
                         
                         
 
 
 
-        <span className='number-page'>2</span>
-              <span className="nextprev-btn back" data-page="turn-1">
-                <box-icon name='chevron-left'></box-icon>
-        </span>
+        
         
       </>
     );
